@@ -13,7 +13,9 @@ public class Commands implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
 		if(args.length == 0){
-			
+			sender.sendMessage("§b§m-------------------------------------\n"
+					+ "§bPara ver as perguntas durante o evento digite §6/quiz jogar\n"
+					+ "§bPara responder use §6/quiz (resposta) §fEx: /quiz jonas farias\n");
 		}
 		if(args.length >= 1){
 			if(args[0].equalsIgnoreCase("iniciar")){
