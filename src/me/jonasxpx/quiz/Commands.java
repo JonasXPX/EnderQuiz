@@ -15,7 +15,8 @@ public class Commands implements CommandExecutor{
 		if(args.length == 0){
 			sender.sendMessage("§b§m-------------------------------------\n"
 					+ "§bPara ver as perguntas durante o evento digite §6/quiz jogar\n"
-					+ "§bPara responder use §6/quiz (resposta) §fEx: /quiz jonas farias\n");
+					+ "§bPara responder use §6/quiz (resposta) §fEx: /quiz jonas farias\n"
+					+ "§b§m-------------------------------------\n");
 		}
 		if(args.length >= 1){
 			if(args[0].equalsIgnoreCase("iniciar")){
@@ -28,7 +29,7 @@ public class Commands implements CommandExecutor{
 				Manager.novoParticipante((Player)sender);
 				return true;
 			}
-			if(Quiz.evento.accept){
+			if(Quiz.evento.accept || !Quiz.evento.valido){
 				sender.sendMessage("§6Aguarde uma nova pergunta!.");
 				return true;
 			}

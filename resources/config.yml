@@ -1,0 +1,20 @@
+﻿JogarParaVerMensagens: true
+MaxPerguntas: 5
+Avisos: 2
+DelayEntreOsAvisos: 20
+MoneyPorPontos: 15000
+Perguntas:
+- Qual o nome do jogo que você esta jogando neste momento?:Minecraft
+- Qual o formato da terra?:geoide
+- Qual o nome do item que o esqueleto usa:Arco,bow
+- Qual as letras das cordenadas do minecraft ?:x y z
+- Qual é o maximo de blocos que você pode ter um 1 slot ?:64
+- O que faz um homem virar a cabeça?:O pescoço,pescoço
+- O que acontece com o leite da vaca depois de um terremoto?:Vira milk-shake,milk-shake
+- FOV maximo do minecraft é:110
+- Minecraft é um jogo...:quadrado
+- O principal item do Minecraft é a:Madeira,log,wood,Madeira refinada
+- Quantas vezes o EndCraft é reiniciado por dia?:2,duas vezes,duas
+- Item mais usado no PvP ?:espada,sword
+- Programa usado para rodar o Minecraft:java
+- Nome do primeiro ex-STAFF do EndCraft:fabio

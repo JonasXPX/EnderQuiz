@@ -101,5 +101,8 @@ public class Manager {
 		}
 	}
 	
+	public static ArrayList<Player> getJogadores(){
+		return jogadores;
+	}
 }
 

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -19,13 +20,15 @@ public class Evento {
 	private BukkitTask threadPergunta;
 	private Pergunta pergunta;
 	private boolean nextPergunta;
+	public boolean accept;
+	public boolean valido = false;
 	private int maxPerguntas;
 	private int count;
 	private int defaultCount;
 	private int delay;
-	public boolean accept;
 	public ArrayList<String> quizList = new ArrayList<String>();
 	public Map<Player, Integer> quiz = new HashMap<Player, Integer>();
+	private Listeners listener = null;
 	
 	public Evento(Quiz plugin, int maxPerguntas, int count, int delay) {
 		this.plugin = plugin;
@@ -50,7 +53,9 @@ public class Evento {
 				+ "§dPara responder use §6/quiz (resposta)§d, Boa sorte!\n");
 		if(plugin.sendForAllServer)this.plugin.getServer().broadcastMessage("§dUse §6/quiz jogar,§d para poder ver as perguntas em andamento!.");
 		this.plugin.getServer().broadcastMessage("§d§m------------------------------------------------\n");
-		
+		inGame = true;
+		listener = new Listeners();
+		plugin.getServer().getPluginManager().registerEvents(listener, plugin);
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -67,23 +72,23 @@ public class Evento {
 			@Override
 			public void run() {
 				if(count == 0){
+					valido = false;
 					if(quizList.isEmpty())
 						Manager.sendMensager("§b§m------------------§d[Quiz]§b§m------------------\n"
-								+ "§6A resposta era: " + pergunta.getResposta() + "\n"
 								+ "§6Ninguém acertou =`( \n"
 								+ "§b§m------------------§d[Quiz]§b§m------------------\n"
 								);
 					else
 						Manager.sendMensager("§b§m------------------§d[Quiz]§b§m------------------\n"
 								+ "§6" + quizList.size() + " §bJogador(es) acertaram\n"
-								+ "§6A resposta era: " + pergunta.getResposta() + "\n"
 								+ "§b§m------------------§d[Quiz]§b§m------------------\n");
+					Manager.sendMensager("§7O chat foi liberado");
 					new BukkitRunnable() {
 						@Override
 						public void run() {
 							continuar();
 						}
-					}.runTaskLaterAsynchronously(plugin, 20 * 5);
+					}.runTaskLaterAsynchronously(plugin, 20 * 8);
 				}
 				if(nextPergunta){
 					return;
@@ -99,6 +104,7 @@ public class Evento {
 					@Override
 					public void run() {
 						nextPergunta = true;
+						valido = true;
 						if((!Manager.okForGo()) || pergunta.getPergunta() == null){
 							parar();
 							return;
@@ -127,12 +133,16 @@ public class Evento {
 	public void parar(){
 		Manager.pagarJogadores(quiz);
 		this.nextPergunta=false;
+		this.inGame=false;
 		quizList.clear();
 		quiz.clear();
+		Manager.getJogadores().clear();
 		this.count = this.defaultCount;
 		threadPergunta.cancel();
 		threadStart.cancel();
 		Manager.maxPerguntas = maxPerguntas;
+		HandlerList.unregisterAll(listener);
+		listener = null;
 	}
 
 	
